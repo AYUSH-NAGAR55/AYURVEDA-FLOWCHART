@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare Platform Flowchart</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: white;
+            color: #2c3e50;
+            padding: 20px;
+            line-height: 1.4;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            border-bottom: 3px solid #3498db;
+        }
+        
+        .header h1 {
+            font-size: 2.2rem;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+        
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 30px;
+            background: #fafafa;
+            border-radius: 15px;
+            border: 2px solid #ecf0f1;
+        }
+        
+        /* Flowchart Elements */
+        .start-end {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+            min-width: 200px;
+        }
+        
+        .process {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 20px 25px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+            min-width: 250px;
+        }
+        
+        .decision {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 20px;
+            transform: rotate(45deg);
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(243, 156, 18, 0.3);
+            width: 180px;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .decision-text {
+            transform: rotate(-45deg);
+            font-size: 0.9rem;
+            line-height: 1.2;
+        }
+        
+        .subprocess {
+            background: linear-gradient(135deg, #27ae60, #229954);
+            color: white;
+            padding: 18px 25px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+            min-width: 220px;
+            border-left: 5px solid #1e8449;
+        }
+        
+        .database {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 0 20px 0 20px;
+            text-align: center;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(155, 89, 182, 0.3);
+            min-width: 200px;
+        }
+        
+        .notification {
+            background: linear-gradient(135deg, #1abc9c, #16a085);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            text-align: center;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(26, 188, 156, 0.3);
+            min-width: 200px;
+        }
+        
+        /* Arrows */
+        .arrow {
+            font-size: 2rem;
+            color: #34495e;
+            font-weight: bold;
+        }
+        
+        .arrow-down {
+            font-size: 2rem;
+            color: #34495e;
+            transform: rotate(90deg);
+        }
+        
+        /* Branch Container */
+        .branch-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            width: 100%;
+            max-width: 800px;
+            gap: 40px;
+        }
+        
+        .branch {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .branch-label {
+            background: #34495e;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        
+        .yes-label {
+            background: #27ae60;
+        }
+        
+        .no-label {
+            background: #e74c3c;
+        }
+        
+        /* Parallel Processes */
+        .parallel-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        /* Connection Lines */
+        .connection-line {
+            width: 2px;
+            height: 30px;
+            background: #34495e;
+            margin: 0 auto;
+        }
+        
+        .horizontal-line {
+            height: 2px;
+            width: 100px;
+            background: #34495e;
+            margin: 10px 0;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .branch-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .parallel-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .decision {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .process, .subprocess {
+                min-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏥 Healthcare Platform System Flowchart</h1>
+            <p>Complete Process Flow with Decision Points</p>
+        </div>
+        
+        <div class="flowchart">
+            <!-- Start -->
+            <div class="start-end">🚀 START</div>
+            
+            <div class="arrow">↓</div>
+            
+            <!-- User Access -->
+            <div class="process">👤 User Accesses Platform</div>
+            
+            <div class="arrow">↓</div>
+            
+            <!-- Registration Check -->
+            <div class="decision">
+                <div class="decision-text">User<br>Registered?</div>
+            </div>
+            
+            <!-- Registration Branch -->
+            <div class="branch-container">
+                <div class="branch">
+                    <div class="branch-label no-label">NO</div>
+                    <div class="arrow">↓</div>
+                    <div class="subprocess">📝 User Registration</div>
+                    <div class="arrow">↓</div>
+                    <div class="database">💾 Store User Data</div>
+                </div>
+                
+                <div class="branch">
+                    <div class="branch-label yes-label">YES</div>
+                    <div class="arrow">↓</div>
+                    <div class="process">🔐 User Login</div>
+                </div>
+            </div>
+            
+            <div class="connection-line"></div>
+            <div class="arrow">↓</div>
+            
+            <!-- Authentication -->
+            <div class="decision">
+                <div class="decision-text">Login<br>Successful?</div>
+            </div>
+            
+            <div class="branch-container">
+                <div class="branch">
+                    <div class="branch-label no-label">NO</div>
+                    <div class="arrow">↓</div>
+                    <div class="notification">❌ Show Error Message</div>
+                    <div class="arrow">↓</div>
+                    <div class="process">🔄 Return to Login</div>
+                </div>
+                
+                <div class="branch">
+                    <div class="branch-label yes-label">YES</div>
+                    <div class="arrow">↓</div>
+                    <div class="process">✅ Access Dashboard</div>
+                </div>
+            </div>
+            
+            <div class="connection-line"></div>
+            <div class="arrow">↓</div>
+            
+            <!-- Browse Doctors -->
+            <div class="process">👨‍⚕️ Browse Available Doctors</div>
+            
+            <div class="arrow">↓</div>
+            
+            <!-- Doctor Selection -->
+            <div class="subprocess">🎯 Select Doctor & Time Slot</div>
+            
+            <div class="arrow">↓</div>
+            
+            <!-- Availability Check -->
+            <div class="decision">
+                <div class="decision-text">Doctor<br>Available?</div>
+            </div>
+            
+            <div class="branch-container">
+                <div class="branch">
+                    <div class="branch-label no-label">NO</div>
+                    <div class="arrow">↓</div>
+                    <div class="notification">⏰ Show Alternative Times</div>
+                    <div class="arrow">↓</div>
+                    <div class="process">🔄 Select Different Slot</div>
+                </div>
+                
+                <div class="branch">
+                    <div class="branch-label yes-label">YES</div>
+                    <div class="arrow">↓</div>
+                    <div class="process">💳 Process Payment</div>
+                </div>
+            </div>
+            
+            <div class="connection-line"></div>
+            <div class="arrow">↓</div>
+            
+            <!-- Payment Check -->
+            <div class="decision">
+                <div class="decision-text">Payment<br>Successful?</div>
+            </div>
+            
+            <div class="branch-container">
+                <div class="branch">
+                    <div class="branch-label no-label">NO</div>
+                    <div class="arrow">↓</div>
+                    <div class="notification">❌ Payment Failed</div>
+                    <div class="arrow">↓</div>
+                    <div class="process">🔄 Retry Payment</div>
+                </div>
+                
+                <div class="branch">
+                    <div class="branch-label yes-label">YES</div>
+                    <div class="arrow">↓</div>
+                    <div class="subprocess">📅 Create Booking Request</div>
+                </div>
+            </div>
+            
+            <div class="connection-line"></div>
+            <div class="arrow">↓</div>
+            
+            <!-- Store Booking -->
+            <div class="database">💾 Store Booking in Database</div>
+            
+            <div class="arrow">↓</div>
+            
+            <!-- Parallel Notifications -->
+            <div class="parallel-container">
+                <div class="notification">🔔 Notify Doctor</div>
+                <div class="notification">📧 Send User Confirmation</div>
+            </div>
+            
+            <div class="arrow">↓</div>
+            
+            <!-- Doctor Response -->
+            <div class="process">👨‍⚕️ Doctor Reviews Request</div>
+            
+            <div class="arrow">↓</div>
+            
+            <!-- Doctor Decision -->
+            <div class="decision">
+                <div class="decision-text">Doctor<br>Accepts?</div>
+            </div>
+            
+            <div class="branch-container">
+                <div class="branch">
+                    <div class="branch-label no-label">NO</div>
+                    <div class="arrow">↓</div>
+                    <div class="subprocess">❌ Decline Booking</div>
+                    <div class="arrow">↓</div>
+                    <div class="notification">💰 Process Refund</div>
+                    <div class="arrow">↓</div>
+                    <div class="notification">📧 Notify User</div>
+                </div>
+                
+                <div class="branch">
+                    <div class="branch-label yes-label">YES</div>
+                    <div class="arrow">↓</div>
+                    <div class="subprocess">✅ Confirm Booking</div>
+                    <div class="arrow">↓</div>
+                    <div class="database">📅 Update Schedule</div>
+                    <div class="arrow">↓</div>
+                    <div class="notification">🎉 Send Confirmation</div>
+                </div>
+            </div>
+            
+            <div class="connection-line"></div>
+            <div class="arrow">↓</div>
+            
+            <!-- Consultation -->
+            <div class="process">🏥 Conduct Consultation</div>
+            
+            <div class="arrow">↓</div>
+            
+            <!-- Update Records -->
+            <div class="database">📋 Update Medical Records</div>
+            
+            <div class="arrow">↓</div>
+            
+            <!-- End -->
+            <div class="start-end">🏁 END</div>
+        </div>
+    </div>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9800ff42e708c462',t:'MTc1ODAzMjM0OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
